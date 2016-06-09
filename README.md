@@ -29,9 +29,9 @@ raven.addAttribute("delay_while_idle", true);
 ```
 raven.push();
 ```
-
-
-
+  
+  
+  
 #### 3.5 Clearing the raven
 You can use the clear() methods to ready the raven for a new notification:
 ```
