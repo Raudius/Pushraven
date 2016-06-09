@@ -18,7 +18,7 @@ FCM Protocol refference: https://firebase.google.com/docs/cloud-messaging/http-s
 ```
 raven.title("MyTitle")
   .text("Hello World!")
-  .color("#ff0000");
+  .color("#ff0000")
   .addTarget(client_key);
 ```
 Some attributes may not have been added to Pushraven yet, so you can use the method: addAttribute(paramter, value):
