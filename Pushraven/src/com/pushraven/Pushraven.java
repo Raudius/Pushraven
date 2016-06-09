@@ -1,8 +1,15 @@
+package com.pushraven;
 import java.io.DataOutputStream;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**
+ * This method allows for simple and modular Notification creation. Notifications can then be pushed to clients
+ * over FCM using the push() method.
+ * @author Raudius
+ *
+ */
 public class Pushraven extends Notification {
 	private final String API_URL = "https://fcm.googleapis.com/fcm/send";
 	private String FIREBASE_SERVER_KEY;
@@ -13,8 +20,13 @@ public class Pushraven extends Notification {
 		FIREBASE_SERVER_KEY = key;
 	}
 	
-	
-	public void push() {
+	/**
+	 * Messages sent to targets.
+	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
+	 * @return
+	 */
+	public int push() {
+		int responseCode = -1;
 		try{
 			String url = API_URL;
 			
@@ -36,11 +48,13 @@ public class Pushraven extends Notification {
 			wr.close();
 			
 			
-			int responseCode = con.getResponseCode();
-			System.out.println("Response code : " + responseCode);
+			responseCode = con.getResponseCode();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		return responseCode;
 	}
+	
 }

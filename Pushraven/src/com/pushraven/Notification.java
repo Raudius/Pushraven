@@ -1,3 +1,4 @@
+package com.pushraven;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -5,6 +6,12 @@ import java.util.Map.Entry;
 
 import org.json.simple.*;
 
+/**
+ * This method implements the "Builder Pattern" in order to construct Notifications
+ * These notifications can be converted into a JSON Object in order to interface with Firebase Cloud Messaging
+ * @author Raudius - 09/06/2016
+ *
+ */
 public class Notification {
 	private List<String> targets;
 	private HashMap<String, Object> attributes;
@@ -12,32 +19,65 @@ public class Notification {
 
 	
 	public Notification(){
-		targets = new ArrayList<String>();
-		attributes = new HashMap<String, Object>();
+		clear();
 	}
 	
 	
 	@SuppressWarnings("unchecked")
+	/**
+	 * Convert this object into JSON.
+	 * @return JSON object adhering to the FCM format.
+	 */
 	public String toJSON(){
-		JSONObject obj = new JSONObject();
-
-		JSONObject not = new JSONObject();
 		
-		for(Entry<String, Object> e : attributes.entrySet()){
+		JSONObject obj = new JSONObject(); // Parent object
+
+
+		// create and add every notification attribute to the json object
+		JSONObject not = new JSONObject();
+		for(Entry<String, Object> e : attributes.entrySet())
 			not.put(e.getKey(), e.getValue());
-		}
 		
 		obj.put("notification", not);
 		
+		
+		// create and add all targets to the JSON array
 		JSONArray ids = new JSONArray();
 		for(String str : targets)
 			ids.add(str);
 		
-		
-		
 		obj.put("registration_ids", ids);
 		
 		return obj.toString();
+	}
+	
+	
+	/**
+	 * Clears both attributes and targets from the Notification
+	 * @see clearTargets() and clearAttributes()
+	 */
+	public Notification clear(){
+		clearTargets();
+		clearAttributes();
+		
+		return this;
+	}
+	
+	/**
+	 * Clear all targets from the Notification
+	 * @see clear()
+	 */
+	public Notification clearTargets(){
+		targets = new ArrayList<String>();
+		return this;
+	}
+	/**
+	 * Clear all attributes from the Notification
+	 * @see clear()
+	 */
+	public Notification clearAttributes(){
+		attributes = new HashMap<String, Object>();
+		return this;
 	}
 	
 	

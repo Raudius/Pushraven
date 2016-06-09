@@ -1,3 +1,4 @@
+package com.pushraven;
 public class Main {
 	
 	private static String SERVER_KEY = "";
@@ -10,14 +11,26 @@ public class Main {
 		
 		// create raven object using your firebase messaging key
 		Pushraven raven = new Pushraven(SERVER_KEY);
+
+		
 		
 		// build raven message using the builder pattern
-		raven.title("Title")
-			.text("Hello World!")
-			.addTarget(a_client_key);
+		raven.title("MyTitle")
+		  .text("Hello World!")
+		  .color("#ff0f0f")
+		  .tag("test_message")
+		  .addTarget(a_client_key);
 		
 		// push the raven message
 		raven.push();
+	
+		// clear the Notification and send a different notification using the same object.
+		raven.clear();
 		
+		raven.title("HELLO")
+			.text("WORLD")
+			.addTarget(a_client_key);
+		
+		raven.push();
 	}
 }
