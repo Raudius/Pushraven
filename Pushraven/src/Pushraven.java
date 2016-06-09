@@ -14,7 +14,7 @@ public class Pushraven extends Notification {
 	}
 	
 	
-	public void send() {
+	public void push() {
 		try{
 			String url = API_URL;
 			
@@ -37,7 +37,6 @@ public class Pushraven extends Notification {
 			
 			
 			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'POST' request to URL : " + url);
 			System.out.println("Response code : " + responseCode);
 		}
 		catch(Exception e){

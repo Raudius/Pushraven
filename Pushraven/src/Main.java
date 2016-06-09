@@ -7,13 +7,17 @@ public class Main {
 		
 		SERVER_KEY = args[0];
 		
+		
+		// create raven object using your firebase messaging key
 		Pushraven raven = new Pushraven(SERVER_KEY);
 		
+		// build raven message using the builder pattern
 		raven.title("Title")
 			.text("Hello World!")
 			.addTarget(a_client_key);
 		
-		raven.send();
+		// push the raven message
+		raven.push();
 		
 	}
 }

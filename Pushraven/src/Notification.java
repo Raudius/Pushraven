@@ -34,8 +34,6 @@ public class Notification {
 			ids.add(str);
 		
 		
-
-		System.out.println(obj.toString());
 		
 		obj.put("registration_ids", ids);
 		
