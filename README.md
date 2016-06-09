@@ -9,7 +9,6 @@ Once you have imported the Pushraven_vXX.jar file into your library, you can sen
 
 ### 1. Create the Pushraven object with your FCM server-key in the constructor.
 ```
-String myKey = "key provided by fcm"
 Pushraven raven = new Pushraven(myKey);
 ```
 
