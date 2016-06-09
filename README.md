@@ -30,7 +30,7 @@ raven.addAttribute("delay_while_idle", true);
 raven.push();
 ```
 
-<br /><br /><br />
+<br /><br />
   
   
 #### 3.5 Clearing the raven
