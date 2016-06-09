@@ -29,3 +29,13 @@ raven.addAttribute("delay_while_idle", true);
 ```
 raven.push();
 ```
+
+
+
+#### Clearing the raven
+You can use the clear() methods to ready the raven for a new notification:
+```
+raven.clear(); // clears the notification, equatable with "raven = new Pushraven();"
+raven.clearAttributes(); // clears FCM protocol paramters excluding targets
+raven.clearTargets(); // only clears targets
+```
