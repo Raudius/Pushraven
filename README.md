@@ -5,7 +5,7 @@ The library was built with the purpose of making the process of sending messages
 
 ## How to use Pushraven
 
-Once you have imported the Pushraven_vXX.jar file into your library, you can send a push message over FCM in 3 steps:
+Once you have imported the Pushraven_vX.X.jar file into your library, you can send a push message over FCM in 3 steps:
 
 ### 1. Create the Pushraven object with your FCM server-key in the constructor.
 ```
