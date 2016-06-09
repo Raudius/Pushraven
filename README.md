@@ -20,7 +20,7 @@ raven.title("MyTitle")
   .color("#ff0000")
   .addTarget(client_key);
 ```
-Some attributes may not have been added to Pushraven yet, so you can use the method: addAttribute(paramter, value):
+Some attributes may not have been added to Pushraven yet, so you can use the method: addAttribute(parameter, value):
 ```
 raven.addAttribute("delay_while_idle", true);
 ```
