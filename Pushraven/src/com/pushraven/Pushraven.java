@@ -25,17 +25,20 @@ public class Pushraven extends Notification {
 	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
 	 * @return
 	 */
-	public int push() {
-		int responseCode = -1;
+	public FcmResponse push() {
+		
+		System.out.println(toJSON());
+		
+		HttpsURLConnection con = null;
 		try{
 			String url = API_URL;
 			
 			URL obj = new URL(url);
-			HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+			con = (HttpsURLConnection) obj.openConnection();
 	
 			con.setRequestMethod("POST");
 	
-			//Set POST headers
+			// Set POST headers
 			con.setRequestProperty("Authorization", "key="+FIREBASE_SERVER_KEY);
 			con.setRequestProperty("Content-Type", "application/json");
 	
@@ -43,18 +46,19 @@ public class Pushraven extends Notification {
 			// Send POST body
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-			wr.writeBytes(this.toJSON());
+			
+			wr.writeBytes( this.toJSON() );
+			
 			wr.flush();
 			wr.close();
 			
-			
-			responseCode = con.getResponseCode();
+			con.getResponseCode();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return responseCode;
+		return new FcmResponse(con);
 	}
 	
 }

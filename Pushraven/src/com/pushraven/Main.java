@@ -1,4 +1,9 @@
 package com.pushraven;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
 public class Main {
 	
 	private static String SERVER_KEY = "";
@@ -12,25 +17,35 @@ public class Main {
 		// create raven object using your firebase messaging key
 		Pushraven raven = new Pushraven(SERVER_KEY);
 
+		Collection<String> c = new ArrayList<String>();
+		c.add("hello");
+		c.add("world");
 		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("Hello", "World!");
+		data.put("Marco", "Polo");
+		data.put("Foo", "Bar");
 		
 		// build raven message using the builder pattern
-		raven.title("MyTitle")
-		  .text("Hello World!")
-		  .color("#ff0f0f")
-		  .tag("test_message")
-		  .addTarget(a_client_key);
+		raven.addMulticast(a_client_key)
+			.collapse_key("a_collapse_key")
+			.priority(1)
+			.delay_while_idle(true)
+			.time_to_live(100)
+			.restricted_package_name("com.revihx.pushnot")
+			.dry_run(false)
+			.data(data)
+			.title("Testing")
+			.body("Hello World!")
+			.color("#ff0000");
 		
+		
+		
+
 		// push the raven message
-		raven.push();
-	
-		// clear the Notification and send a different notification using the same object.
-		raven.clear();
+		FcmResponse r = raven.push();
 		
-		raven.title("HELLO")
-			.text("WORLD")
-			.addTarget(a_client_key);
-		
-		raven.push();
+		// prints response code and message
+		System.out.println(r);
 	}
 }
