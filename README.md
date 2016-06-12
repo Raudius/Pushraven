@@ -17,7 +17,7 @@ Pushraven raven = new Pushraven(my_key);
 raven.title("MyTitle")
   .text("Hello World!")
   .color("#ff0000")
-  .addTarget(client_key);
+  .to(client_key);
 ```
 Some attributes from the specification may not have been added to Pushraven yet, so you can use the following methods:
 ```
