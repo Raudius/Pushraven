@@ -12,7 +12,7 @@ Once you have imported the Pushraven_vX.X.jar file into your library and the com
 Pushraven raven = new Pushraven(my_key);
 ```
 
-### 2. Build your message using paramters from the FCM refference[1]
+### 2. Build your message using paramters from the FCM refference<sup>[1]</sup>
 ```
 raven.title("MyTitle")
   .text("Hello World!")
@@ -42,6 +42,7 @@ raven.clear(); // clears the notification, equatable with "raven = new Pushraven
 raven.clearAttributes(); // clears FCM protocol paramters excluding targets
 raven.clearTargets(); // only clears targets
 ```
+NOTE: Clearing the raven is more efficient than creating a new object. As creating a new object will cause Java Garbage Collector to delete the old object.
 
 <br /><br />
 
