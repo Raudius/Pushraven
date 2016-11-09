@@ -29,7 +29,7 @@ raven.addNotificationAttribute("color", "#ff0000"); // for notification attirubt
 ```
 Request attributes are those in table 1 from the specification.
 Notification attributes are those in tables 2a (iOS) and 2b (Android)
-<br />
+<br /><br />
 NOTE: you may also use the static Notification from Pushraven: 
 ```
 Pushraven.notification.title("title")
