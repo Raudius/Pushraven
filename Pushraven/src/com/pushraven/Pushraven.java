@@ -11,23 +11,42 @@ import javax.net.ssl.HttpsURLConnection;
  *
  */
 public class Pushraven extends Notification {
-	private final String API_URL = "https://fcm.googleapis.com/fcm/send";
-	private String FIREBASE_SERVER_KEY;
+	private final static String API_URL = "https://fcm.googleapis.com/fcm/send";
+	private static String FIREBASE_SERVER_KEY;
+	public static Notification notification;
 	
-	public Pushraven(String key){
-		super();
-		
+	// static initialization
+	static {
+		notification = new Notification();
+	}
+	
+	
+	/**
+	* Set the API Server Key.
+	*/
+	public static void setKey(String key){
 		FIREBASE_SERVER_KEY = key;
 	}
+	
+	
+	/** 
+	 * Set new Notification object
+	 */
+	public static void setNotification(Notification notification){
+		Pushraven.notification = notification;
+	}
+	
 	
 	/**
 	 * Messages sent to targets.
 	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
-	 * @return
+	 * @return FcmResponse object containing HTTP response info.
 	 */
-	public FcmResponse push() {
-		
-		System.out.println(toJSON());
+	public static FcmResponse push(Notification n) {	
+		if(FIREBASE_SERVER_KEY == null){
+			System.err.println("No Server-Key has been defined for Pushraven.");
+			return null;
+		}
 		
 		HttpsURLConnection con = null;
 		try{
@@ -47,7 +66,7 @@ public class Pushraven extends Notification {
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			
-			wr.writeBytes( this.toJSON() );
+			wr.writeBytes( n.toJSON() );
 			
 			wr.flush();
 			wr.close();
@@ -59,6 +78,16 @@ public class Pushraven extends Notification {
 		}
 		
 		return new FcmResponse(con);
+	}
+
+
+	/**
+	 * Messages sent to targets.
+	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
+	 * @return FcmResponse object containing HTTP response info.
+	 */
+	public static FcmResponse push() {
+		return push(notification);
 	}
 	
 }
