@@ -5,15 +5,18 @@ The library was built with the purpose of making the process of sending messages
 
 ## How to use Pushraven
 
+**NOTE: Major implementation changes from prerelease versions to v1.0.0. New version version implements Pushraven as singleton that is 'fed' a Notification object. Check example below.**
+
 Once you have imported the Pushraven_vX.X.jar file into your library and the com.pushraven.* package into your class, you can send a push message over FCM in 3 steps:
 
-### 1. Create a Pushraven object with your FCM server-key in the constructor.
+### 1. Give Pushraven your FCM Server Key.
 ```
-Pushraven raven = new Pushraven(my_key);
+Pushraven.setKey(my_key);
 ```
 
-### 2. Build your message using paramters from the FCM refference<sup>[1]</sup>
+### 2. Build your 'Notification' using paramters from the FCM refference<sup>[1]</sup>
 ```
+Notification raven = new Notification();
 raven.title("MyTitle")
   .text("Hello World!")
   .color("#ff0000")
@@ -26,10 +29,21 @@ raven.addNotificationAttribute("color", "#ff0000"); // for notification attirubt
 ```
 Request attributes are those in table 1 from the specification.
 Notification attributes are those in tables 2a (iOS) and 2b (Android)
+<br /><br />
+NOTE: you may also use the static Notification from Pushraven: 
+```
+Pushraven.notification.title("title")
+  .to("clients")
+  ...
+```
 
 ### 3. Send the raven
 ```
-raven.push();
+Pushraven.push(raven);
+
+// or 
+Pushraven.setNotification(raven); // if not already set
+Pushraven.push();
 ```
 
 <br /><br />
