@@ -10,7 +10,7 @@ import javax.net.ssl.HttpsURLConnection;
  * @author Raudius
  *
  */
-public class Pushraven extends Notification {
+public class Pushraven {
 	private final static String API_URL = "https://fcm.googleapis.com/fcm/send";
 	private static String FIREBASE_SERVER_KEY;
 	public static Notification notification;
