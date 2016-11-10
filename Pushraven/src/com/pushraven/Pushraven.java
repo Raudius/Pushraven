@@ -1,5 +1,7 @@
 package com.pushraven;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -59,15 +61,18 @@ public class Pushraven {
 	
 			// Set POST headers
 			con.setRequestProperty("Authorization", "key="+FIREBASE_SERVER_KEY);
-			con.setRequestProperty("Content-Type", "application/json");
+			con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 	
 			
 			// Send POST body
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-			
-			wr.writeBytes( n.toJSON() );
-			
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+
+			writer.write(n.toJSON());
+			writer.close();
+			wr.close();
+
 			wr.flush();
 			wr.close();
 			
