@@ -5,7 +5,7 @@ The library was built with the purpose of making the process of sending messages
 
 ## How to use Pushraven
 
-**NOTE: Major implementation changes from prerelease versions to v1.0.0. New version version implements Pushraven as singleton that is 'fed' a Notification object. Check example below.**
+**NOTE: Major implementation changes from prerelease versions to v1.0.0. New version version implements Pushraven as singleton that is 'fed' a Notification object. See [Sample.java](Pushraven/src/com/pushraven/Sample.java) or the example below.**
 
 Once you have imported the Pushraven_vX.X.jar file into your library and the com.pushraven.* package into your class, you can send a push message over FCM in 3 steps:
 
@@ -52,7 +52,7 @@ Pushraven.push();
 #### 3.5 Clearing the raven
 You can use the clear() methods to ready the raven for a new notification:
 ```
-raven.clear(); // clears the notification, equatable with "raven = new Pushraven();"
+raven.clear(); // clears the notification, equatable with "raven = new Notification();"
 raven.clearAttributes(); // clears FCM protocol paramters excluding targets
 raven.clearTargets(); // only clears targets
 ```
