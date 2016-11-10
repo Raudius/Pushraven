@@ -1,10 +1,8 @@
-package com.pushraven.test;
+package com.pushraven;
 
 import java.util.HashMap;
 
-import com.pushraven.*;
-
-public class Main {
+public class Sample {
 	
 	private static String SERVER_KEY = "";
 	
