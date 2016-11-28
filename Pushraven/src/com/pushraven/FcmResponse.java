@@ -18,7 +18,7 @@ public class FcmResponse {
 	
 	
 	public String toString(){
-		return String.format("Response: %d\nMessage: '%s'", getResponseCode(), getResponseMessage());
+		return String.format("Response: %d\n Success Message: '%s'\nError Message: '%s'", getResponseCode(), getSuccessResponseMessage(), getResponseMessage());
 	}
 	
 	public int getResponseCode(){
@@ -54,4 +54,33 @@ public class FcmResponse {
 		}
 		return total.toString();
 	}
+    public String getSuccessResponseMessage(){
+        InputStream in = null;
+        try {
+            in = connection.getInputStream();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        
+        if(in == null)
+            return "";
+        
+        BufferedReader r = new BufferedReader(new InputStreamReader(in));
+
+        StringBuilder total = new StringBuilder();
+
+        String line = null;
+
+        try {
+            while ((line = r.readLine()) != null) {
+               total.append(line);
+            }
+
+            r.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return total.toString();
+    }
 }
