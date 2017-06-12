@@ -7,8 +7,8 @@ The library was built with the purpose of making the process of sending messages
 
 **NOTE: Package name change from com.raudius.pushraven to us.raudi.pushraven for release version 1.0.1!**
 
-### 0. Import Pusraven to your Project.
-Add Pusraven.jar and json-simple.jar to your project. Or add Pushraven as a Maven dependency:
+### 0. Import Pushraven to your Project.
+Add Pushraven.jar and json-simple.jar to your project. Or add Pushraven as a Maven dependency:
 ```
 <dependency>
   <groupId>us.raudi.pushraven</groupId>
