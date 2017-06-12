@@ -5,9 +5,17 @@ The library was built with the purpose of making the process of sending messages
 
 ## How to use Pushraven
 
-**NOTE: Major implementation changes from prerelease versions to v1.0.0. New version version implements Pushraven as singleton that is 'fed' a Notification object. See [Sample.java](Pushraven/src/com/pushraven/Sample.java) or the example below.**
+**NOTE: Package name change from com.raudius.pushraven to us.raudi.pushraven for release version 1.0.1!**
 
-Once you have imported the Pushraven_vX.X.jar file into your library and the com.pushraven.* package into your class, you can send a push message over FCM in 3 steps:
+### 0. Import Pusraven to your Project.
+Add Pusraven.jar and json-simple.jar to your project. Or add Pushraven as a Maven dependency:
+```
+<dependency>
+  <groupId>us.raudi.pushraven</groupId>
+  <artifactId>Pushraven</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
 
 ### 1. Give Pushraven your FCM Server Key.
 ```
