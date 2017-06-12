@@ -1,13 +1,12 @@
-package com.pushraven;
+package us.raudi.pushraven;
 
 import java.util.HashMap;
 
 public class Sample {
 	
-	private static String SERVER_KEY = "";
 	
 	public static void main(String[] args) {
-		SERVER_KEY = args[0];
+		final String SERVER_KEY = args[0];
 		
 		Pushraven.setKey(SERVER_KEY);
 		

@@ -1,4 +1,4 @@
-package com.pushraven;
+package us.raudi.pushraven;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.OutputStreamWriter;
@@ -7,8 +7,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * This method allows for simple and modular Notification creation. Notifications can then be pushed to clients
- * over FCM using the push() method.
+ * Modular notificatiopn creation class.
  * @author Raudius
  *
  */
@@ -25,6 +24,7 @@ public class Pushraven {
 	
 	/**
 	* Set the API Server Key.
+	* @param key Firebase Server Key (NOT the Web API Key!!!)
 	*/
 	public static void setKey(String key){
 		FIREBASE_SERVER_KEY = key;
@@ -33,6 +33,7 @@ public class Pushraven {
 	
 	/** 
 	 * Set new Notification object
+	 * @param notification set the notification object for Pushraven
 	 */
 	public static void setNotification(Notification notification){
 		Pushraven.notification = notification;
@@ -42,6 +43,7 @@ public class Pushraven {
 	/**
 	 * Messages sent to targets.
 	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
+	 * @param n Defines the notification object to be pushed to FCM.
 	 * @return FcmResponse object containing HTTP response info.
 	 */
 	public static FcmResponse push(Notification n) {	
@@ -68,15 +70,14 @@ public class Pushraven {
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
-
 			writer.write(n.toJSON());
+			
+			// close output stream
 			writer.close();
 			wr.close();
 
-			wr.flush();
-			wr.close();
-			
-			con.getResponseCode();
+			// send request
+			con.connect();
 		}
 		catch(Exception e){
 			e.printStackTrace();
