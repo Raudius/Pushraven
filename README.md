@@ -22,7 +22,7 @@ Add Pushraven.jar and json-simple.jar to your project. Or add Pushraven as a Mav
 Pushraven.setKey(my_key);
 ```
 
-### 2. Build your 'Notification' using paramters from the FCM refference<sup>[1]</sup>
+### 2. Build your 'Notification' using parameters from the FCM reference<sup>[1]</sup>
 ```
 Notification raven = new Notification();
 raven.title("MyTitle")
