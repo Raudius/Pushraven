@@ -26,7 +26,7 @@ public class Sample {
 			.priority(1)
 			.delay_while_idle(true)
 			.time_to_live(100)
-			.restricted_package_name("com.revihx.pushnot")
+			.restricted_package_name("com.package.name")
 			.dry_run(true)
 			.data(data)
 			.title("Testing")

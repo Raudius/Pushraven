@@ -78,6 +78,7 @@ public class Pushraven {
 
 			// send request
 			con.connect();
+			con.getResponseCode();
 		}
 		catch(Exception e){
 			e.printStackTrace();

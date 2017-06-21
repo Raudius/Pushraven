@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.raudi.pushraven</groupId>
   <artifactId>Pushraven</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <name>Pushraven</name>
   <description>A simple Java library to interface with Firebase Cloud Messaging (FCM) API. Pushraven allows you to push notifications to clients in very few lines of code.</description>
   <url>https://github.com/Raudius/Pushraven</url>
