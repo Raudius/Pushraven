@@ -13,7 +13,7 @@ Add Pushraven.jar and json-simple.jar to your project. Or add Pushraven as a Mav
 <dependency>
   <groupId>us.raudi.pushraven</groupId>
   <artifactId>Pushraven</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 
