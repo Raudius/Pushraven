@@ -3,10 +3,7 @@ package us.raudi.pushraven;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class implements the "Builder Pattern" in order to construct Notifications
@@ -433,5 +430,26 @@ public class Notification {
 		arr.addAll(args);
 
 		return addNotificationAttribute("title_loc_key", arr);
+	}
+
+	/**
+	 * @return Immutable.
+	 */
+	public Collection<String> getMulticast() {
+		return Collections.unmodifiableCollection(multicast);
+	}
+
+	/**
+	 * @return Immutable.
+	 */
+	public Map<String, Object> getRequestAttributes() {
+		return Collections.unmodifiableMap(requestAttributes);
+	}
+
+	/**
+	 * @return Immutable.
+	 */
+	public Map<String, Object> getNotificationAttributes() {
+		return Collections.unmodifiableMap(notificationAttributes);
 	}
 }
