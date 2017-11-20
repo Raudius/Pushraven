@@ -24,10 +24,20 @@ public class Notification {
 
 	/**
 	 * Convert this object into JSON.
-	 *
-	 * @return JSON object adhering to the FCM format.
+	 * 
+	 * @return JSON object adhering to the old FCM format.
 	 */
 	public String toJSON() {
+		return toJSON(false);
+	}
+	
+	/**
+	 * Convert this object into JSON.
+	 *
+	 * @return JSON object adhering to the FCM format. It can be the new format, 
+	 * that requires the JSON to have a "message" field that includes the whole JSON
+	 */
+	public String toJSON(Boolean encapsulateRequestInMessage) {
 		JSONObject obj = new JSONObject(); // Parent object
 
 		// create and add every notification attribute into its own json objects
@@ -48,8 +58,14 @@ public class Notification {
 			// add targets to parent
 			obj.put("registration_ids", ids);
 		}
-
-		return obj.toString();
+		
+		String result = obj.toString();
+		if (encapsulateRequestInMessage){
+			result = new StringBuilder(result).insert(0, "{\"message\":").toString();
+			result = new StringBuilder(result).insert(result.length()-1, "}").toString();
+		}
+		
+		return result;
 	}
 
 	/**
@@ -307,6 +323,16 @@ public class Notification {
 	 */
 	public Notification title(String title) {
 		return addNotificationAttribute("title", title);
+	}
+	
+	/**
+	 * Indicates notification body text, appearing as "body" instead of "text".
+	 *
+	 * @param body Notification body
+	 * @return Itself as part of the Builder Pattern
+	 */
+	public Notification bodyAsBody(String body) {
+		return addNotificationAttribute("body", body);
 	}
 
 	/**
