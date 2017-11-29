@@ -1,46 +1,45 @@
 package us.raudi.pushraven;
 
+import java.io.File;
+
 import us.raudi.pushraven.configs.AndroidConfig;
 import us.raudi.pushraven.configs.AndroidConfig.Priority;
+import us.raudi.pushraven.notifications.AndroidNotification;
 
 public class Sample {
 	public static void main(String[] args) {
-		final String SERVER_KEY = "AAAAyhD613w:APA91bEXYcWtpQoFXJdbOXugYQkbxy5uu45rcWFTrRnjQXw9J92NS4sG7qg6eX3a5KwLvQz_ubmIrPqwDauZ2bXiilAcVmbF2hWDHXVHmYP0fB4aDwxtJmi2OQ2ZGjpJnKTzadCs6wZc ";
-		String id = "cA7gOth0X1Q:APA91bERuP4lNAw_oOe9huC27Eao6TDFLEgBmDGnln0IpJDgXyBttxCMV6u1VtegzbfFAI4b3TwAWOceg2oB2A2UuVzpYcxyrZHEVuEiZBF3dSnsWnZds-pdwMxefQDojBj6JvIqQEyd";
+		String CLIENT_ID = "cA7gOth0X1Q:APA91bERuP4lNAw_oOe9huC27Eao6TDFLEgBmDGnln0IpJDgXyBttxCMV6u1VtegzbfFAI4b3TwAWOceg2oB2A2UuVzpYcxyrZHEVuEiZBF3dSnsWnZds-pdwMxefQDojBj6JvIqQEyd";
 
-		Pushraven.setKey(SERVER_KEY);
-
+		Pushraven.setAccountFile(new File("service_account.json"));
+		Pushraven.setProjectId("fcmtest-f57d4");
+		
 		// create Notification object
-		Message raven = new Message();
-		Notification not = new Notification();
-		AndroidConfig droidCfg = new AndroidConfig();
+		Notification not = new Notification()
+				.title("Hello World")
+				.body("This is a notification");
+		
+		// Create android specific configuration
+		AndroidConfig droidCfg = new AndroidConfig()
+				.priority(Priority.HIGH)
+				.notification(
+						new AndroidNotification()
+							.color("#ff0000")
+						)
+				.priority(Priority.HIGH);;
+				
+		// Create Message and add Notitifacion and Configurations to it
+		Message raven = new Message()
+				.name("id")
+				.notification(not)
+				.token(CLIENT_ID)
+				.android(droidCfg);
 		
 		
-		
-		not.title("Hello World")
-			.body("This is a notification");
-		
-		
-		droidCfg.priority(Priority.HIGH);
-		
+		// Push the Message to FCM
+		FcmResponse response = Pushraven.push(raven);
 
-		// build raven message using the builder pattern
-		raven.name("id")
-			.notification(not)
-			.token(id)
-			.android(droidCfg);
-		
-		System.out.println(raven.toJson());
 
-
-		// push the raven message
-		//FcmResponse response = Pushraven.push(raven);
-
-		// alternatively set static notification first.
-		Pushraven.setNotification(raven);
-		//response = Pushraven.push();
-
-		// prints response code and message
-		//System.out.println(response);
+		// Print API server response
+		System.out.println(response);
 	}
 }

@@ -8,6 +8,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -21,76 +22,60 @@ import java.util.Arrays;
  */
 public class Pushraven {
 	private final static String API_URL = "https://fcm.googleapis.com/v1/projects/";
-	private static String FIREBASE_SERVER_KEY;
-	public static Message message;
+	public static File ACCOUNT_FILE;
+	private static String PROJECT_ID;
+	public static boolean validate_only = false;
 
-	// static initialization
-	static {
-		message = new Message();
-	}
-
+	
 	/**
-	 * Set the API Server Key.
-	 *
-	 * @param key Firebase Server Key (NOT the Web API Key!!!)
+	 * Defines the account authenticator file
+	 * @param file Json file downloaded from FirebaseConsole >> Settings >> Service Accounts
 	 */
-	public static void setKey(String key) {
-		FIREBASE_SERVER_KEY = key;
+	public static void setAccountFile(File file) {
+		ACCOUNT_FILE = file;
+	}
+	
+	public static void setProjectId(String id) {
+		PROJECT_ID = id;
+	}
+	
+	public static void setValidateOnly(boolean validate_only) {
+		Pushraven.validate_only = validate_only;
 	}
 
-	/**
-	 * Set new Notification object
-	 *
-	 * @param notification set the notification object for Pushraven
-	 */
-	public static void setNotification(Message notification) {
-		Pushraven.message = notification;
-	}
 
 	/**
-	 * Send parameter Message to targets.
-	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
+	 * Send Message 'm' to targets.
+	 * This class interfaces with the FCM server as per the HTTP v1 REST API
 	 *
-	 * @param n Defines the notification object to be pushed to FCM.
+	 * @param m Defines the Message object to be pushed to FCM.
 	 * @return FcmResponse object containing HTTP response info.
 	 */
 	@SuppressWarnings("unchecked")
-	public static FcmResponse push(Message n) {
+	public static FcmResponse push(Message m) {
+		// check ProjectID and Account-File have been given and that File exists
+		if(!checkFileAndId()) return null;
 		
-		try {
-			System.out.println("OAuth: "+ getAccessToken());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		if (FIREBASE_SERVER_KEY == null) {
-			System.err.println("No Server-Key has been defined for Pushraven.");
-			return null;
-		}
-
 		HttpsURLConnection con = null;
 		try {
-			String url = API_URL+"fcmtest-f57d4/messages:send";
+			String url = API_URL+PROJECT_ID+"/messages:send";
 
 			URL fcm = new URL(url);
 			con = (HttpsURLConnection) fcm.openConnection();
 
+			// Set POST headers for authorization and content-type
 			con.setRequestMethod("POST");
-
-			// Set POST headers
 			con.setRequestProperty("Authorization", "Bearer " + getAccessToken());
 			con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 
-			// Send POST body
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
 			
+			// create request object (https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send)
 			JSONObject obj = new JSONObject();
-			obj.put("message", n.toJson());
-			obj.put("validate_only", false);
-			
-			System.out.println(obj);
+			obj.put("message", m.toJson());
+			obj.put("validate_only", validate_only);
 			
 			writer.write(obj.toString());
 
@@ -108,23 +93,31 @@ public class Pushraven {
 		return new FcmResponse(con);
 	}
 
+	private static boolean checkFileAndId() {
+		if (PROJECT_ID == null) {
+			System.err.println("Error: No Project ID has been defined for Pushraven.");
+			return false;
+		}
+		if(ACCOUNT_FILE == null) {
+			System.err.println("Error: No Account File has been defined for Pushraven.");
+			return false;
+		}
+		else if(!ACCOUNT_FILE.exists()) {
+			System.err.println("Error: Could not find the given Account File.");
+			return false;
+		}
+		
+		return true;
+	}
+
+
 	private static String getAccessToken() throws IOException {
 		String[] SCOPES = {"https://www.googleapis.com/auth/firebase.messaging"};
+
 		GoogleCredential googleCredential = GoogleCredential
-				.fromStream(new FileInputStream("service_account.json"))
+				.fromStream(new FileInputStream(ACCOUNT_FILE))
 				.createScoped(Arrays.asList(SCOPES));
 		googleCredential.refreshToken();
 		return googleCredential.getAccessToken();
-	}
-	
-	
-	/**
-	 * Send staticly defined Pushraven.Message to targets.
-	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
-	 *
-	 * @return FcmResponse object containing HTTP response info.
-	 */
-	public static FcmResponse push() {
-		return push(Pushraven.message);
 	}
 }
