@@ -85,6 +85,6 @@ public class FcmResponse {
 	}
 
 	public String toString() {
-		return String.format("Response: %d\nSuccess Message: '%s'\nError Message: '%s'", getResponseCode(), getSuccessResponseMessage(), getErrorMessage());
+		return String.format("Response Code: %d\nSuccess Message: '%s'\nError Message: '%s'", getResponseCode(), getSuccessResponseMessage(), getErrorMessage());
 	}
 }

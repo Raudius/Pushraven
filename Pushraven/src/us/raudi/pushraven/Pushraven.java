@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 /**
- * Modular notificatiopn creation class.
+ * This class is used to statically send Messages to FCM
  *
  * @author Raudius
  */
@@ -35,10 +35,20 @@ public class Pushraven {
 		ACCOUNT_FILE = file;
 	}
 	
+	/**
+	 * Define the ID for the project. 
+	 * Can be found in the settings of the Firebase Console
+	 * @param id
+	 */
 	public static void setProjectId(String id) {
 		PROJECT_ID = id;
 	}
 	
+	
+	/**
+	 * Flag for testing the request without actually delivering the message.
+	 * @param validate_only If set to true the message wont be delivered.
+	 */
 	public static void setValidateOnly(boolean validate_only) {
 		Pushraven.validate_only = validate_only;
 	}
@@ -93,6 +103,10 @@ public class Pushraven {
 		return new FcmResponse(con);
 	}
 
+	/*
+	 * Performs check prior to sending the message. 
+	 * If returns false the Message wont be sent
+	 */
 	private static boolean checkFileAndId() {
 		if (PROJECT_ID == null) {
 			System.err.println("Error: No Project ID has been defined for Pushraven.");
