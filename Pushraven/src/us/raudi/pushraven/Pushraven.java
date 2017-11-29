@@ -1,80 +1,34 @@
 package us.raudi.pushraven;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import org.json.simple.JSONObject;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.Arrays;
 
 /**
- * Modular notification creation class.
+ * Modular notificatiopn creation class.
  *
- * @author Raudius, equintana
+ * @author Raudius
  */
 public class Pushraven {
-	
-	private final static String DEFAULT_API_URL = "https://fcm.googleapis.com/fcm/send";
-	private final static String DEFAULT_REQUEST_METHOD = "POST";
-	private final static String FIREBASE_SERVER_DEFAULT_AUTH_SYSTEM = "Authorization";
-	private final static String FIREBASE_SERVER_DEFAULT_TOKEN_SYSTEM = "key=";
-	private final static String FIREBASE_SERVER_DEFAULT_CONTENT_TYPE_KEY = "Content-Type";
-	private final static String FIREBASE_SERVER_DEFAULT_CONTENT_TYPE_VALUE = "application/json;charset=UTF-8";
-	private final static String FIREBASE_SERVER_DEFAULT_CODIFICATION = "UTF-8";
-	private final static Boolean FIREBASE_SERVER_DEFAULT_ENCAPSULATE_REQUEST_IN_MESSAGE = false;
-	
-	private static String API_URL;
-	private static String REQUEST_METHOD;
-	private static String FIREBASE_SERVER_AUTH_SYSTEM;
-	private static String FIREBASE_SERVER_TOKEN_SYSTEM;
+	private final static String API_URL = "https://fcm.googleapis.com/v1/projects/";
 	private static String FIREBASE_SERVER_KEY;
-	private static String FIREBASE_SERVER_CONTENT_TYPE_KEY;
-	private static String FIREBASE_SERVER_CONTENT_TYPE_VALUE;
-	private static String FIREBASE_SERVER_CODIFICATION;
-	private static Boolean FIREBASE_SERVER_ENCAPSULATE_REQUEST_IN_MESSAGE;
-	
-	public static Notification notification;
+	public static Message message;
 
 	// static initialization
 	static {
-		notification = new Notification();
+		message = new Message();
 	}
 
-	/**
-	 * Set the API URL
-	 *
-	 * @param apiUrl The URL of the API
-	 */
-	public static void setApiUrl(String apiUrl) {
-		API_URL = apiUrl;
-	}
-	
-	/**
-	 * Set the Request method
-	 *
-	 * @param requestMethod The Request method
-	 */
-	public static void setRequestMethod(String requestMethod) {
-		REQUEST_METHOD = requestMethod;
-	}
-	
-	/**
-	 * Set the API Server Auth System.
-	 *
-	 * @param key Firebase Server Auth System
-	 */
-	public static void setAuthSystem(String authSystem) {
-		FIREBASE_SERVER_AUTH_SYSTEM = authSystem;
-	}
-	
-	/**
-	 * Set the API Server Token System.
-	 *
-	 * @param key Firebase Server Token System (can be "key=" or "Bearer " or whatever)
-	 */
-	public static void setTokenSystem(String tokenSystem) {
-		FIREBASE_SERVER_TOKEN_SYSTEM = tokenSystem;
-	}
-	
 	/**
 	 * Set the API Server Key.
 	 *
@@ -83,60 +37,32 @@ public class Pushraven {
 	public static void setKey(String key) {
 		FIREBASE_SERVER_KEY = key;
 	}
-	
-	/**
-	 * Set the left part of the "Content type".
-	 *
-	 * @param contentTypeKey Content type key
-	 */
-	public static void setContentTypeKey(String contentTypeKey) {
-		FIREBASE_SERVER_CONTENT_TYPE_KEY = contentTypeKey;
-	}
-	
-	/**
-	 * Set the right part of the "Content type".
-	 *
-	 * @param contentTypeValue Content type value
-	 */
-	public static void setContentTypeValue(String contentTypeValue) {
-		FIREBASE_SERVER_CONTENT_TYPE_VALUE = contentTypeValue;
-	}
-	
-	/**
-	 * Set the codification for the BufferedWriter.
-	 *
-	 * @param codification BufferedWriter codification
-	 */
-	public static void setCodification(String codification) {
-		FIREBASE_SERVER_CODIFICATION = codification;
-	}
-	
-	/**
-	 * Set the condition to encapsulate the JSON object for the BufferedWriter inside a "message" field.
-	 *
-	 * @param encapsulateInMessage Boolean
-	 */
-	public static void setEncapsulateRequestInMessage(Boolean encapsulateRequestInMessage) {
-		FIREBASE_SERVER_ENCAPSULATE_REQUEST_IN_MESSAGE = encapsulateRequestInMessage;
-	}
-	
+
 	/**
 	 * Set new Notification object
 	 *
 	 * @param notification set the notification object for Pushraven
 	 */
-	public static void setNotification(Notification notification) {
-		Pushraven.notification = notification;
+	public static void setNotification(Message notification) {
+		Pushraven.message = notification;
 	}
 
 	/**
-	 * Messages sent to targets.
+	 * Send parameter Message to targets.
 	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
 	 *
 	 * @param n Defines the notification object to be pushed to FCM.
 	 * @return FcmResponse object containing HTTP response info.
 	 */
-	public static FcmResponse push(Notification n) {
+	@SuppressWarnings("unchecked")
+	public static FcmResponse push(Message n) {
+		
+		try {
+			System.out.println("OAuth: "+ getAccessToken());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if (FIREBASE_SERVER_KEY == null) {
 			System.err.println("No Server-Key has been defined for Pushraven.");
 			return null;
@@ -144,32 +70,29 @@ public class Pushraven {
 
 		HttpsURLConnection con = null;
 		try {
-			if (API_URL == null){
-				API_URL = DEFAULT_API_URL;
-			}
-			String url = API_URL;			
-			URL obj = new URL(url);
-			con = (HttpsURLConnection) obj.openConnection();
+			String url = API_URL+"fcmtest-f57d4/messages:send";
 
-			if (REQUEST_METHOD == null){
-				REQUEST_METHOD = DEFAULT_REQUEST_METHOD;
-			}
-			con.setRequestMethod(REQUEST_METHOD);
-						
-			setRequestMethodHeaders(con);									
+			URL fcm = new URL(url);
+			con = (HttpsURLConnection) fcm.openConnection();
+
+			con.setRequestMethod("POST");
+
+			// Set POST headers
+			con.setRequestProperty("Authorization", "Bearer " + getAccessToken());
+			con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 
 			// Send POST body
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-			if (FIREBASE_SERVER_CODIFICATION == null){
-				FIREBASE_SERVER_CODIFICATION = FIREBASE_SERVER_DEFAULT_CODIFICATION;
-			}
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, FIREBASE_SERVER_CODIFICATION));
-			if (FIREBASE_SERVER_ENCAPSULATE_REQUEST_IN_MESSAGE == null){
-				FIREBASE_SERVER_ENCAPSULATE_REQUEST_IN_MESSAGE = FIREBASE_SERVER_DEFAULT_ENCAPSULATE_REQUEST_IN_MESSAGE;
-			}
-			String jsonToWrite = n.toJSON(FIREBASE_SERVER_ENCAPSULATE_REQUEST_IN_MESSAGE);			
-			writer.write(jsonToWrite);
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+			
+			JSONObject obj = new JSONObject();
+			obj.put("message", n.toJson());
+			obj.put("validate_only", false);
+			
+			System.out.println(obj);
+			
+			writer.write(obj.toString());
 
 			// close output stream
 			writer.close();
@@ -184,34 +107,24 @@ public class Pushraven {
 
 		return new FcmResponse(con);
 	}
-	
-	/**
-	 * Set request method headers
-	 */
-	private static void setRequestMethodHeaders(HttpsURLConnection con){
-		if (FIREBASE_SERVER_AUTH_SYSTEM == null){
-			FIREBASE_SERVER_AUTH_SYSTEM = FIREBASE_SERVER_DEFAULT_AUTH_SYSTEM;
-		}
-		if (FIREBASE_SERVER_TOKEN_SYSTEM == null){
-			FIREBASE_SERVER_TOKEN_SYSTEM = FIREBASE_SERVER_DEFAULT_TOKEN_SYSTEM;
-		}		
-		if (FIREBASE_SERVER_CONTENT_TYPE_KEY == null){
-			FIREBASE_SERVER_CONTENT_TYPE_KEY = FIREBASE_SERVER_DEFAULT_CONTENT_TYPE_KEY;
-		}
-		if (FIREBASE_SERVER_CONTENT_TYPE_VALUE == null){
-			FIREBASE_SERVER_CONTENT_TYPE_VALUE = FIREBASE_SERVER_DEFAULT_CONTENT_TYPE_VALUE;
-		}		
-		con.setRequestProperty(FIREBASE_SERVER_AUTH_SYSTEM, FIREBASE_SERVER_TOKEN_SYSTEM + FIREBASE_SERVER_KEY);	
-		con.setRequestProperty(FIREBASE_SERVER_CONTENT_TYPE_KEY, FIREBASE_SERVER_CONTENT_TYPE_VALUE);			
+
+	private static String getAccessToken() throws IOException {
+		String[] SCOPES = {"https://www.googleapis.com/auth/firebase.messaging"};
+		GoogleCredential googleCredential = GoogleCredential
+				.fromStream(new FileInputStream("service_account.json"))
+				.createScoped(Arrays.asList(SCOPES));
+		googleCredential.refreshToken();
+		return googleCredential.getAccessToken();
 	}
 	
+	
 	/**
-	 * Messages sent to targets.
+	 * Send staticly defined Pushraven.Message to targets.
 	 * This class interfaces with the FCM server by sending the Notification over HTTP-POST JSON.
 	 *
 	 * @return FcmResponse object containing HTTP response info.
 	 */
 	public static FcmResponse push() {
-		return push(notification);
+		return push(Pushraven.message);
 	}
 }
