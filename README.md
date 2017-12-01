@@ -31,15 +31,16 @@ Pushraven.setProjectId("project-1234");
 
 ### 2. Build your 'Message' using parameters from the [FCM reference](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)<sup>[1]</sup>
 In Pushraven all the JSON Objects from the API are implemented as classes, and all fields are implemented as methods.
-
-#### 2.1 Create Notification
+  
+#### 2.1 **Create Notification**
 ```
 Notification not = new Notification()
 				.title("Hello World")
 				.body("This is a notification");
 ```
-
-#### 2.2 (Optional) Create target specific configurations.
+  
+  
+#### 2.2 **(Optional) Create target specific configurations.**
 ```
 AndroidConfig droidCfg = new AndroidConfig()
 				.notification(
@@ -48,7 +49,9 @@ AndroidConfig droidCfg = new AndroidConfig()
 						)
 				.priority(Priority.HIGH);
 ```
-#### 2.3 Create the Message (using Notificaiton and any configs)
+  
+  
+#### 2.3 **Create the Message (using Notificaiton and any configs)**
 ```
 Message raven = new Message()
 				.name("id")
