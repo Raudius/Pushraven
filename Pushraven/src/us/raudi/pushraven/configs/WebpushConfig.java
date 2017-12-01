@@ -5,6 +5,12 @@ import java.util.Map;
 import us.raudi.pushraven.Payload;
 import us.raudi.pushraven.notifications.WebpushNotification;
 
+/**
+ * Webpush protocol options.
+ * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#webpushconfig
+ * @author Raudius
+ *
+ */
 public class WebpushConfig extends Payload {
 	/**
 	 * HTTP headers defined in webpush protocol. Refer to Webpush protocol for supported headers, e.g. "TTL": "15".
@@ -29,7 +35,7 @@ public class WebpushConfig extends Payload {
 	
 	/**
 	 * A web notification to send.
-	 * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#WebpushNotification
+	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#WebpushNotification
 	 * @param not
 	 * @return
 	 */

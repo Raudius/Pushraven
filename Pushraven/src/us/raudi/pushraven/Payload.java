@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
  */
 @SuppressWarnings("unchecked")
 public class Payload {
-	private Map<String, Object> attributes = new HashMap<>();
+	private Map<String, Object> attributes = new HashMap<String, Object>();
 	
 	/**
 	 * Converts the attribute map into a JSON Object

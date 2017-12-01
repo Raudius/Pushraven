@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.raudi.pushraven</groupId>
   <artifactId>Pushraven</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.0</version>
   <name>Pushraven</name>
   <description>A simple Java library to interface with Firebase Cloud Messaging (FCM) API. Pushraven allows you to push notifications to clients in very few lines of code.</description>
   <url>https://github.com/Raudius/Pushraven</url>
@@ -34,12 +34,16 @@
 	</scm>
 	
   
-  	<distributionManagement>
-  		<snapshotRepository>
-  		  <id>ossrh</id>
-  		  <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-  		</snapshotRepository>
-	</distributionManagement>
+ <distributionManagement>
+  <snapshotRepository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  </snapshotRepository>
+  <repository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  </repository>
+</distributionManagement>
   
   
   <build>
@@ -52,19 +56,21 @@
         </excludes>
       </resource>
     </resources>
+    
+    
     <plugins>
     
     <plugin>
       <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.7</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-   	  </plugin>
+      <artifactId>nexus-staging-maven-plugin</artifactId>
+      <version>1.6.7</version>
+      <extensions>true</extensions>
+      <configuration>
+        <serverId>ossrh</serverId>
+        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+      </configuration>
+    </plugin>
    	  
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>

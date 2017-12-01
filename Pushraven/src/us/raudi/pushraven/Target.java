@@ -1,5 +1,11 @@
 package us.raudi.pushraven;
 
+/**
+ * Target to send a message to. target can be only one of the TargetType
+ * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS-table
+ * @author Raudius
+ *
+ */
 public class Target {
 	public enum TargetType {
 		TOKEN, TOPIC, CONDITION;

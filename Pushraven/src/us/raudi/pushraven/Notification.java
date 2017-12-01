@@ -2,7 +2,7 @@ package us.raudi.pushraven;
 
 /**
  * Basic notification template to use across all platforms.
- * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
+ * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
  * @author Raudius
  *
  */

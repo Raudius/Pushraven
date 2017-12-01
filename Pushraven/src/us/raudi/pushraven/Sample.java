@@ -30,7 +30,7 @@ public class Sample {
 							.color("#ff0000")
 						)
 				.priority(Priority.HIGH);
-				
+			
 		// Create Message and add Notification and Configurations to it
 		Message raven = new Message()
 				.name("id")

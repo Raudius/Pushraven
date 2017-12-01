@@ -1,72 +1,81 @@
 # Pushraven
 
-A simple library to easily send notifications over Firebase Cloud Messaging (FCM). 
+A library to easily send notifications over Firebase Cloud Messaging (FCM). 
 The library was built with the purpose of making the process of sending messages as simple and modular as posible.
+
+### Legacy API
+FCM has had a total makeover for the new "REST v1 API". I have decided not to include backwards compatibility in Pushraven. 
+**If you wish to use the (simpler) legacy API see [Legacy Instructions](Legacy.md)**
 
 ## How to use Pushraven
 
-**NOTE: Package name change from com.raudius.pushraven to us.raudi.pushraven for release version 1.0.1!**
-
 ### 0. Import Pushraven to your Project.
-Add Pushraven.jar and json-simple.jar to your project. Or add Pushraven as a Maven dependency:
+**NOTE: New package name to remove redundant 'pushraven' in groupId!**
+Add Pushraven.jar and it's dependencies to your project. Or add Pushraven as a Maven dependency:
 ```
 <dependency>
-  <groupId>us.raudi.pushraven</groupId>
-  <artifactId>Pushraven</artifactId>
-  <version>1.0.2</version>
+  <groupId>us.raudi</groupId>
+  <artifactId>pushraven</artifactId>
+  <version>1.0.0</version>
 </dependency>
 ```
 
-### 1. Give Pushraven your FCM Server Key.
+### 1. Give Pushraven your Project ID and your Service Account
+Both of these can be found in your Firebase console Project Settings:
+ * The ID is found in the "General" tab
+ * The Service Account JSON file can be downloaded from the "Service Account" tab.
 ```
-Pushraven.setKey(my_key);
+Pushraven.setAccountFile(new File("service_account.json"));
+Pushraven.setProjectId("project-1234");
 ```
 
-### 2. Build your 'Notification' using parameters from the FCM reference<sup>[1]</sup>
+### 2. Build your 'Message' using parameters from the [FCM reference](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)<sup>[1]</sup>
+In Pushraven all the JSON Objects from the API are implemented as classes, and all fields are implemented as methods.
+
+#### 2.1 Create Notification
 ```
-Notification raven = new Notification();
-raven.title("MyTitle")
-  .text("Hello World!")
-  .color("#ff0000")
-  .to(client_key);
+Notification not = new Notification()
+				.title("Hello World")
+				.body("This is a notification");
 ```
-Some attributes from the specification may not have been added to Pushraven yet, so you can use the following methods:
+
+#### 2.2 (Optional) Create target specific configurations.
 ```
-raven.addRequestAttribute("delay_while_idle", true); // for request attributes
-raven.addNotificationAttribute("color", "#ff0000"); // for notification attirubtes
+AndroidConfig droidCfg = new AndroidConfig()
+				.notification(
+						new AndroidNotification()
+							.color("#ff0000")
+						)
+				.priority(Priority.HIGH);
 ```
-Request attributes are those in table 1 from the specification.
-Notification attributes are those in tables 2a (iOS) and 2b (Android)
-<br /><br />
-NOTE: you may also use the static Notification from Pushraven: 
+#### 2.3 Create the Message (using Notificaiton and any configs)
 ```
-Pushraven.notification.title("title")
-  .to("clients")
-  ...
+Message raven = new Message()
+				.name("id")
+				.notification(not)
+				.token(CLIENT_ID) // could instead use: topic(String) or condition(String)
+				.android(droidCfg);
+```
+
+
+##### NOTE: Missing attributes
+If the API updates and implements new fields to any class, these may not have been added to Pushraven yet.
+You can use the following methods (for any of the constructor classes: Message, Notification, config classes...):
+```
+addAttribute(String key, Object value);
+addAttributeMap(String key, Map<?, ?> map);
+addAttributeArray(String key, Collection<?> arr);
+addAttributePayload(String key, Payload payload); // see: Payload.java
 ```
 
 ### 3. Send the raven
 ```
 Pushraven.push(raven);
-
-// or 
-Pushraven.setNotification(raven); // if not already set
-Pushraven.push();
+// or (if you want to access the response)
+FcmResponse response = Pushraven.push(raven);
 ```
 
-<br /><br />
-  
-  
-#### 3.5 Clearing the raven
-You can use the clear() methods to ready the raven for a new notification:
-```
-raven.clear(); // clears the notification, equatable with "raven = new Notification();"
-raven.clearAttributes(); // clears FCM protocol paramters excluding targets
-raven.clearTargets(); // only clears targets
-```
-NOTE: Clearing the raven is more efficient than creating a new object. As creating a new object will cause Java Garbage Collector to delete the old object.
-
-<br /><br />
 
 
-[1] https://firebase.google.com/docs/cloud-messaging/http-server-ref
+
+[1] https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages

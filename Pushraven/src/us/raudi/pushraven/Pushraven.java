@@ -29,10 +29,11 @@ public class Pushraven {
 	
 	/**
 	 * Defines the account authenticator file
-	 * @param file Json file downloaded from FirebaseConsole >> Settings >> Service Accounts
+	 * @param file Json file downloaded from FirebaseConsole -&gt; Settings -&gt; Service Accounts
 	 */
 	public static void setAccountFile(File file) {
 		ACCOUNT_FILE = file;
+		Pushraven.setAccountFile(file);
 	}
 	
 	/**

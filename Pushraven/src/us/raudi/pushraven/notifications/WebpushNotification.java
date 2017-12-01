@@ -2,6 +2,12 @@ package us.raudi.pushraven.notifications;
 
 import us.raudi.pushraven.Notification;
 
+/**
+ * Notification to send to android devices.
+ * Web notification to send via webpush protocol.
+ * @author Raudius
+ *
+ */
 public class WebpushNotification extends Notification {
 	/**
 	 * The URL to use for the notification's icon.

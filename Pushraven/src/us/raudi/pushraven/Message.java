@@ -2,6 +2,7 @@ package us.raudi.pushraven;
 
 import java.util.Map;
 
+import us.raudi.pushraven.Target;
 import us.raudi.pushraven.Target.TargetType;
 import us.raudi.pushraven.configs.AndroidConfig;
 import us.raudi.pushraven.configs.ApnsConfig;
@@ -9,7 +10,7 @@ import us.raudi.pushraven.configs.WebpushConfig;
 
 /**
  * Message to send by Firebase Cloud Messaging Service.
- * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#resource-message
+ * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#resource-message
  * @author Raudius
  *
  */
@@ -37,7 +38,7 @@ public class Message extends Payload {
 	
 	/**
 	 * Input only. Basic notification template to use across all platforms.
-	 * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
+	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
 	 * @param not
 	 * @return
 	 */
@@ -48,7 +49,7 @@ public class Message extends Payload {
 	
 	/**
 	 * Input only. Android specific options for messages sent through FCM connection server.
-	 * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
+	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
 	 * @param config
 	 * @return
 	 */
@@ -59,7 +60,7 @@ public class Message extends Payload {
 	
 	/**
 	 * Input only. Webpush protocol options.
-	 * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#webpushconfig
+	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#webpushconfig
 	 * @param config
 	 * @return
 	 */
@@ -70,7 +71,7 @@ public class Message extends Payload {
 	
 	/**
 	 * Input only. Apple Push Notification Service specific options.
-	 * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig
+	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig
 	 * @param config
 	 * @return
 	 */
@@ -110,7 +111,7 @@ public class Message extends Payload {
 	}
 	
 	/**
-	 * Condition to send a message to, e.g. "'foo' in topics && 'bar' in topics".
+	 * Condition to send a message to, e.g. "'foo' in topics &amp;&amp; 'bar' in topics".
 	 * Note: setting this target will remove all previous targets (token, topic an condition).
 	 * @param cond
 	 * @return

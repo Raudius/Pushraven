@@ -7,7 +7,7 @@ import us.raudi.pushraven.notifications.AndroidNotification;
 
 /**
  * Android specific options for messages sent through FCM connection server.
- * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
+ * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
  * @author Raudius
  *
  */
@@ -78,7 +78,7 @@ public class AndroidConfig extends Payload {
 	
 	/**
 	 * Notification to send to android devices.
-	 * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidnotification
+	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidnotification
 	 * @param not
 	 * @return
 	 */

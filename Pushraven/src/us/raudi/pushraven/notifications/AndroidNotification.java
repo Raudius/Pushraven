@@ -5,7 +5,7 @@ import java.util.Collection;
 import us.raudi.pushraven.Notification;
 /**
  * Notification to send to android devices.
- * @see https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidnotification
+ * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidnotification
  * @author Revihx
  *
  */
@@ -62,7 +62,7 @@ public class AndroidNotification extends Notification {
 	
 	/**
 	 * The key to the body string in the app's string resources to use to localize the body text to the user's current localization. 
-	 * @see https://developer.android.com/guide/topics/resources/string-resource.html
+	 * https://developer.android.com/guide/topics/resources/string-resource.html
 	 * @param key
 	 * @return
 	 */
@@ -72,7 +72,7 @@ public class AndroidNotification extends Notification {
 	
 	/**
 	 * Variable string values to be used in place of the format specifiers in body_loc_key to use to localize the body text to the user's current localization.
-	 * @see https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling
+	 * https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling
 	 * @param args
 	 * @return
 	 */
@@ -82,7 +82,7 @@ public class AndroidNotification extends Notification {
 	
 	/**
 	 * The key to the title string in the app's string resources to use to localize the title text to the user's current localization. 
-	 * @see https://developer.android.com/guide/topics/resources/string-resource.html
+	 * https://developer.android.com/guide/topics/resources/string-resource.html
 	 * @param key
 	 * @return
 	 */
@@ -92,7 +92,7 @@ public class AndroidNotification extends Notification {
 	
 	/**
 	 * Variable string values to be used in place of the format specifiers in title_loc_key to use to localize the title text to the user's current localization.
-	 * @see https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling
+	 * https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling
 	 * @param args
 	 * @return
 	 */
