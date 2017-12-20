@@ -33,7 +33,6 @@ public class Pushraven {
 	 */
 	public static void setAccountFile(File file) {
 		ACCOUNT_FILE = file;
-		Pushraven.setAccountFile(file);
 	}
 	
 	/**

@@ -4,21 +4,27 @@ A library to easily send notifications over Firebase Cloud Messaging (FCM).
 The library was built with the purpose of making the process of sending messages as simple and modular as posible.
 
 ### Legacy API
-FCM has had a total makeover for the new "REST v1 API". I have decided not to include backwards compatibility in Pushraven. 
+FCM has had a total makeover for the new "REST v1 API". I have decided not to include backwards compatibility in Pushraven.<br/>
 **If you wish to use the (simpler) legacy API see [Legacy Instructions](Legacy.md)**
 
 ## How to use Pushraven
 
 ### 0. Import Pushraven to your Project.
-**NOTE: New package name to remove redundant 'pushraven' in groupId!**
-Add Pushraven.jar and it's dependencies to your project. Or add Pushraven as a Maven dependency:
+**NOTE: New package name to remove redundant 'pushraven' in groupId!** <br/>
+Add Pushraven.jar and it's dependencies to your project. Or add Pushraven as a dependency: <br/>
+**Maven:**
 ```
 <dependency>
   <groupId>us.raudi</groupId>
   <artifactId>pushraven</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
+**Gradle:**
+```
+compile group: 'us.raudi', name: 'pushraven', version: '1.0.1'
+```
+
 
 ### 1. Give Pushraven your Project ID and your Service Account
 Both of these can be found in your Firebase console Project Settings:
@@ -51,7 +57,7 @@ AndroidConfig droidCfg = new AndroidConfig()
 ```
   
   
-#### 2.3 Create the Message (using Notificaiton and any configs)
+#### 2.3 Create the Message (using Notification and any configs)
 ```
 Message raven = new Message()
 		.name("id")
