@@ -47,7 +47,7 @@ public class AndroidNotification extends Notification {
 	 * @return
 	 */
 	public AndroidNotification tag(String mytag) {
-		return (AndroidNotification) addAttribute("sound", mytag);
+		return (AndroidNotification) addAttribute("tag", mytag);
 	}
 	
 	/**
