@@ -1,27 +1,27 @@
 package us.raudi.pushraven;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 import us.raudi.pushraven.configs.AndroidConfig;
 import us.raudi.pushraven.configs.AndroidConfig.Priority;
 import us.raudi.pushraven.notifications.AndroidNotification;
 
 public class Sample {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// The folliwng three lines will be different for every implementation
 		// 1. Client id, used to send messages to specific client
 		// 2. Json file downloaded from the Firebase console, containing details for authentication to google
 		// 3. Your project ID. Can also be found in the Firebase console.
 		String CLIENT_ID = "cA7gOth0X1Q:APA91bERuP4lNAw_oOe9huC27Eao6TDFLEgBmDGnln0IpJDgXyBttxCMV6u1VtegzbfFAI4b3TwAWOceg2oB2A2UuVzpYcxyrZHEVuEiZBF3dSnsWnZds-pdwMxefQDojBj6JvIqQEyd";
 		
-		try {
-			Pushraven.setCredential(new File("service_account.json"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		File serviceAccount = new File("service_account.json");
+		GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream(serviceAccount) );
+		Pushraven.setCredential(credential);		
 		Pushraven.setProjectId("fcmtest-f57d4");
 		
 		// Create Notification object

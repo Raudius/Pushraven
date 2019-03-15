@@ -17,22 +17,22 @@ Add Pushraven.jar and it's dependencies to your project. Or add Pushraven as a d
 <dependency>
   <groupId>us.raudi</groupId>
   <artifactId>pushraven</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 **Gradle:**
 ```
-compile group: 'us.raudi', name: 'pushraven', version: '1.0.1'
+compile group: 'us.raudi', name: 'pushraven', version: '1.0.2'
 ```
 
 
 ### 1. Give Pushraven your Project ID and your Service Account
-Both of these can be found in your Firebase console Project Settings:
+Both of these can be found in your Firebase console, under Project Settings:
  * The ID is found in the "General" tab
  * The Service Account JSON file can be downloaded from the "Service Account" tab.
 ```
-Pushraven.setAccountFile(new File("service_account.json"));
-Pushraven.setProjectId("project-1234");
+Pushraven.setCredential(new File("service_account.json");	
+Pushraven.setProjectId("fcmtest-f57d4");
 ```
 
 ### 2. Build your 'Message' using parameters from the [FCM reference](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)<sup>[1]</sup>
