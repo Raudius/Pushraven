@@ -22,17 +22,40 @@ import java.util.Arrays;
  */
 public class Pushraven {
 	private final static String API_URL = "https://fcm.googleapis.com/v1/projects/";
-	public static File ACCOUNT_FILE;
+	private static GoogleCredential CREDENTIAL;
 	private static String PROJECT_ID;
 	public static boolean validate_only = false;
 
 	
+	
 	/**
-	 * Defines the account authenticator file
-	 * @param file Json file downloaded from FirebaseConsole -&gt; Settings -&gt; Service Accounts
+	 * @deprecated  As of release 1.1.0, replaced by {@link #setCredential()}
+	 * setAccountFile will be phased out in future releases
 	 */
-	public static void setAccountFile(File file) {
-		ACCOUNT_FILE = file;
+	public static void setAccountFile(File file)  {
+		try {
+			Pushraven.setCredential( file );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Sets the google credentials from a JSON account file.
+	 * @param file Json file downloaded from FirebaseConsole -&gt; Settings -&gt; Service Accounts
+	 * @throws IOException 
+	 */
+	public static void setCredential(File file) throws IOException {
+		Pushraven.setCredential( GoogleCredential.fromStream(new FileInputStream(file)) );
+	}
+	
+	/**
+	 * Setter for the GoogleCredentials.
+	 * @param credential
+	 */
+	public static void setCredential(GoogleCredential credential) {
+		Pushraven.CREDENTIAL = credential;
 	}
 	
 	/**
@@ -112,25 +135,18 @@ public class Pushraven {
 			System.err.println("Error: No Project ID has been defined for Pushraven.");
 			return false;
 		}
-		if(ACCOUNT_FILE == null) {
-			System.err.println("Error: No Account File has been defined for Pushraven.");
+		if(CREDENTIAL == null) {
+			System.err.println("Error: No credentials have been provided for Pushraven.");
 			return false;
-		}
-		else if(!ACCOUNT_FILE.exists()) {
-			System.err.println("Error: Could not find the given Account File.");
-			return false;
-		}
-		
+		}		
 		return true;
 	}
 
 
 	private static String getAccessToken() throws IOException {
 		String[] SCOPES = {"https://www.googleapis.com/auth/firebase.messaging"};
-
-		GoogleCredential googleCredential = GoogleCredential
-				.fromStream(new FileInputStream(ACCOUNT_FILE))
-				.createScoped(Arrays.asList(SCOPES));
+		
+		GoogleCredential googleCredential = CREDENTIAL.createScoped(Arrays.asList(SCOPES));
 		googleCredential.refreshToken();
 		return googleCredential.getAccessToken();
 	}

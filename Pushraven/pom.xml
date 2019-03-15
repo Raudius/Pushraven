@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.raudi</groupId>
   <artifactId>Pushraven</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <name>Pushraven</name>
   <description>A simple Java library to interface with Firebase Cloud Messaging (FCM) API. Pushraven allows you to push notifications to clients in very few lines of code.</description>
   <url>https://github.com/Raudius/Pushraven</url>
@@ -14,7 +14,7 @@
 			<name>Raul Ferreira Fuentes</name>
 			<email>r.ferreira.fuentes@gmail.com</email>
 			<organization>Raudius</organization>
-			<organizationUrl>http://www.raudi.us</organizationUrl>
+			<organizationUrl>http://raudi.us</organizationUrl>
 			<timezone>GMT+1</timezone>
 		</developer>
 	</developers>
@@ -139,7 +139,7 @@
 	<dependency>
 	    <groupId>com.google.api-client</groupId>
 	    <artifactId>google-api-client</artifactId>
-	    <version>1.23.0</version>
+	    <version>1.28.0</version>
 	</dependency>
 
   </dependencies>

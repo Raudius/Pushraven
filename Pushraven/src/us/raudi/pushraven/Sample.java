@@ -1,6 +1,7 @@
 package us.raudi.pushraven;
 
 import java.io.File;
+import java.io.IOException;
 
 import us.raudi.pushraven.configs.AndroidConfig;
 import us.raudi.pushraven.configs.AndroidConfig.Priority;
@@ -13,7 +14,14 @@ public class Sample {
 		// 2. Json file downloaded from the Firebase console, containing details for authentication to google
 		// 3. Your project ID. Can also be found in the Firebase console.
 		String CLIENT_ID = "cA7gOth0X1Q:APA91bERuP4lNAw_oOe9huC27Eao6TDFLEgBmDGnln0IpJDgXyBttxCMV6u1VtegzbfFAI4b3TwAWOceg2oB2A2UuVzpYcxyrZHEVuEiZBF3dSnsWnZds-pdwMxefQDojBj6JvIqQEyd";
-		Pushraven.setAccountFile(new File("service_account.json"));
+		
+		try {
+			Pushraven.setCredential(new File("service_account.json"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Pushraven.setProjectId("fcmtest-f57d4");
 		
 		// Create Notification object
