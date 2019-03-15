@@ -12,7 +12,7 @@ public class WebpushNotification extends Notification {
 	/**
 	 * The URL to use for the notification's icon.
 	 * @param url URL to the icon resource
-	 * @return
+	 * @return Returns the modified payload
 	 */
 	public WebpushNotification icon(String url) {
 		return (WebpushNotification) addAttribute("icon", url);

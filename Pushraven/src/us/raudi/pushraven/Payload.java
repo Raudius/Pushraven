@@ -18,7 +18,7 @@ public class Payload {
 	
 	/**
 	 * Converts the attribute map into a JSON Object
-	 * @return
+	 * @return JSON object with the payload data
 	 */
 	public JSONObject toJson() {
 		JSONObject obj = new JSONObject(); // Parent object
@@ -32,7 +32,7 @@ public class Payload {
 	 * Adds an attribute object to the attribute map
 	 * @param key Key with which to store the object
 	 * @param value Attribute object to be stored
-	 * @return
+	 * @return Returns the modified payload
 	 */
 	public Payload addAttribute(String key, Object value){
 		attributes.put(key, value);
@@ -44,7 +44,7 @@ public class Payload {
 	 * The map is converted to a Json Object before saving to the map.
 	 * @param key Key with which to store the object
 	 * @param map Attribute map to be stored
-	 * @return
+	 * @return Returns the modified payload
 	 */
 	public Payload addAttributeMap(String key, Map<?, ?> map) {
 		JSONObject obj = new JSONObject();
@@ -58,7 +58,7 @@ public class Payload {
 	 * The array is converted to a JSON array before saving to the map.
 	 * @param key Key with which to store the object
 	 * @param arr Attribute array to be stored
-	 * @return
+	 * @return Returns the modified payload
 	 */
 	public Payload addAttributeArray(String key, Collection<?> arr) {
 		JSONArray jsonArray = new JSONArray();
@@ -72,7 +72,7 @@ public class Payload {
 	 * The Payload is converted to JSON before saving to the map
 	 * @param key Key with which to store the object
 	 * @param payload Attribute payload to be stored
-	 * @return
+	 * @return Returns the modified payload
 	 */
 	public Payload addAttributePayload(String key, Payload payload) {
 		return addAttribute(key, payload.toJson());
@@ -82,7 +82,7 @@ public class Payload {
 	 * Retrieves the attribute object for a given key.
 	 * Remember that Maps and Payloads are converted to JSON Objects AND Collections converted to JSON Arrays
 	 * @param key Key with which the attribute will be retrieved
-	 * @return
+	 * @return Returns the requested attribute object
 	 */
 	public Object getAttribute(String key) {
 		return attributes.get(key);

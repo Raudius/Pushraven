@@ -17,8 +17,8 @@ import us.raudi.pushraven.configs.WebpushConfig;
 public class Message extends Payload {
 	/**
 	 * Output Only. The identifier of the message sent, in the format of: "projects/{PROJECT_ID}/messages/{message_id}."
-	 * @param name
-	 * @return
+	 * @param name (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message name(String name) {
 		return (Message) addAttribute("name", name);
@@ -28,8 +28,8 @@ public class Message extends Payload {
 	/**
 	 * Input only. Arbitrary key/value payload.
 	 * An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
-	 * @param data
-	 * @return
+	 * @param data (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message data(Map<String, String> data) {
 		return (Message) addAttributeMap("data", data);
@@ -39,8 +39,8 @@ public class Message extends Payload {
 	/**
 	 * Input only. Basic notification template to use across all platforms.
 	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
-	 * @param not
-	 * @return
+	 * @param not (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message notification(Notification not) {
 		return (Message) addAttributePayload("notification", not);
@@ -50,8 +50,8 @@ public class Message extends Payload {
 	/**
 	 * Input only. Android specific options for messages sent through FCM connection server.
 	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
-	 * @param config
-	 * @return
+	 * @param config (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message android(AndroidConfig config) {
 		return (Message) addAttributePayload("android", config);
@@ -61,8 +61,8 @@ public class Message extends Payload {
 	/**
 	 * Input only. Webpush protocol options.
 	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#webpushconfig
-	 * @param config
-	 * @return
+	 * @param config (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message webpush(WebpushConfig config) {
 		return (Message) addAttributePayload("webpush", config);
@@ -72,8 +72,8 @@ public class Message extends Payload {
 	/**
 	 * Input only. Apple Push Notification Service specific options.
 	 * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig
-	 * @param config
-	 * @return
+	 * @param config (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message apns(ApnsConfig config) {
 		return (Message) addAttributePayload("apns", config);
@@ -82,8 +82,8 @@ public class Message extends Payload {
 	/**
 	 * Target to send a message to. target can be only one of the following: TOKEN, TOPIC, CONDITION.
 	 * Setting a new target will remove all previously set targets.
-	 * @param target
-	 * @return
+	 * @param target (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message target(Target target) {
 		setTarget(target);
@@ -93,8 +93,8 @@ public class Message extends Payload {
 	/**
 	 * Registration token to send a message to.
 	 * Note: setting this target will remove all previous targets (token, topic an condition).
-	 * @param tok
-	 * @return
+	 * @param tok (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message token(String tok) {
 		return target(new Target(TargetType.TOKEN, tok));
@@ -103,8 +103,8 @@ public class Message extends Payload {
 	/**
 	 * Topic name to send a message to, e.g. "weather". Note: "/topics/" prefix should not be provided.
 	 * Note: setting this target will remove all previous targets (token, topic an condition).
-	 * @param top
-	 * @return
+	 * @param top (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message topic(String top) {
 		return target(new Target(TargetType.TOPIC, top));
@@ -113,8 +113,8 @@ public class Message extends Payload {
 	/**
 	 * Condition to send a message to, e.g. "'foo' in topics &amp;&amp; 'bar' in topics".
 	 * Note: setting this target will remove all previous targets (token, topic an condition).
-	 * @param cond
-	 * @return
+	 * @param cond (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Message condition(String cond) {
 		return target(new Target(TargetType.CONDITION, cond));

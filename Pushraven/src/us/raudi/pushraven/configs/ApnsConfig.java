@@ -14,8 +14,8 @@ public class ApnsConfig extends Payload {
 	/**
 	 * HTTP request headers defined in Apple Push Notification Service. Refer to APNs request headers for supported headers, e.g. "apns-priority": "10".
 	 * An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
-	 * @param values
-	 * @return
+	 * @param values (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public ApnsConfig headers(Map<String, String> values) {
 		return (ApnsConfig) addAttributeMap("headers", values);
@@ -28,7 +28,8 @@ public class ApnsConfig extends Payload {
 	 * You must implement the payload yourself using the Payload class and the documentation from apple.
 	 * us.raudi.pushraven.Payload.java
 	 * https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/PayloadKeyReference.html#//apple_ref/doc/uid/TP40008194-CH17-SW1
-	 * @return
+	 * @param p (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public ApnsConfig payload(Payload p) {
 		return (ApnsConfig) addAttributePayload("payload", p);

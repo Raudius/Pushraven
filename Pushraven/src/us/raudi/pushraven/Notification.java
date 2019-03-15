@@ -9,8 +9,8 @@ package us.raudi.pushraven;
 public class Notification extends Payload {
 	/**
 	 * The notification's title.
-	 * @param title
-	 * @return
+	 * @param title (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Notification title(String title) {
 		return (Notification) addAttribute("title",title);
@@ -18,8 +18,8 @@ public class Notification extends Payload {
 	
 	/**
 	 * The notification's body text.
-	 * @param body
-	 * @return
+	 * @param body (see: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+	 * @return Returns the modified payload
 	 */
 	public Notification body(String body) {
 		return (Notification) addAttribute("body", body);

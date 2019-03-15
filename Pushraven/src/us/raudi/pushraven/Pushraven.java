@@ -29,8 +29,9 @@ public class Pushraven {
 	
 	
 	/**
-	 * @deprecated  As of release 1.1.0, replaced by {@link #setCredential()}
+	 * @deprecated  As of release 1.1.0, replaced by setCredential()
 	 * setAccountFile will be phased out in future releases
+	 * @param file JSON file containing the account credentials.
 	 */
 	public static void setAccountFile(File file)  {
 		try {
@@ -44,6 +45,7 @@ public class Pushraven {
 	/**
 	 * Sets the google credentials from a JSON account file.
 	 * @param file Json file downloaded from FirebaseConsole -&gt; Settings -&gt; Service Accounts
+	 * @param file JSON file containing the account credentials.
 	 * @throws IOException 
 	 */
 	public static void setCredential(File file) throws IOException {
@@ -52,7 +54,7 @@ public class Pushraven {
 	
 	/**
 	 * Setter for the GoogleCredentials.
-	 * @param credential
+	 * @param credential GoogleCredential authentication object
 	 */
 	public static void setCredential(GoogleCredential credential) {
 		Pushraven.CREDENTIAL = credential;
