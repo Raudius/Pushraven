@@ -17,12 +17,12 @@ Add Pushraven.jar and it's dependencies to your project. Or add Pushraven as a d
 <dependency>
   <groupId>us.raudi</groupId>
   <artifactId>pushraven</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 </dependency>
 ```
 **Gradle:**
 ```
-compile group: 'us.raudi', name: 'pushraven', version: '1.0.2'
+compile group: 'us.raudi', name: 'pushraven', version: '1.0.3'
 ```
 
 
