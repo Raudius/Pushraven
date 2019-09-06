@@ -31,9 +31,11 @@ Both of these can be found in your Firebase console, under Project Settings:
  * The ID is found in the "General" tab
  * The Service Account JSON file can be downloaded from the "Service Account" tab.
 ```
-Pushraven.setCredential(new File("service_account.json");	
+Pushraven.setCredential(new File("service_account.json"));	
 Pushraven.setProjectId("fcmtest-f57d4");
 ```
+
+**NOTE: ** A GoogleCredential object may also be used to set the credential.
 
 ### 2. Build your 'Message' using parameters from the [FCM reference](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)<sup>[1]</sup>
 In Pushraven all the JSON Objects from the API are implemented as classes, and all fields are implemented as methods.
@@ -68,7 +70,7 @@ Message raven = new Message()
 
 
 ##### NOTE: Missing attributes
-If the API updates and implements new fields to any class, these may not have been added to Pushraven yet.
+The FCM API may update and implement new fields which may not have been added to Pushraven yet.
 You can use the following methods (for any of the constructor classes: Message, Notification, config classes...):
 ```
 addAttribute(String key, Object value);

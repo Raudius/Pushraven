@@ -1,2 +1,4 @@
-
-Pushraven/service_account.json
+/target/
+/bin/
+/.settings/
+service_account.json

@@ -29,7 +29,7 @@ public class Pushraven {
 	
 	
 	/**
-	 * @deprecated  As of release 1.1.0, replaced by setCredential()
+	 * @deprecated  As of release 1.0.2, replaced by setCredential()
 	 * setAccountFile will be phased out in future releases
 	 * @param file JSON file containing the account credentials.
 	 */
@@ -102,6 +102,7 @@ public class Pushraven {
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Authorization", "Bearer " + getAccessToken());
 			con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+			
 
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
